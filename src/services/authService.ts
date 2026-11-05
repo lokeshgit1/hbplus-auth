@@ -2,6 +2,7 @@ import {
   User as FirebaseUser,
   signOut as firebaseSignOut,
   onAuthStateChanged,
+  getRedirectResult,
   Unsubscribe,
 } from 'firebase/auth';
 import { Platform } from 'react-native';
@@ -102,5 +103,10 @@ export function getCurrentUser(): FirebaseUser | null {
 export function subscribeToAuthChanges(
   callback: (user: FirebaseUser | null) => void
 ): Unsubscribe {
+  if (Platform.OS === 'web') {
+    try {
+      getRedirectResult(auth).catch(() => {});
+    } catch (_) {}
+  }
   return onAuthStateChanged(auth, callback);
 }

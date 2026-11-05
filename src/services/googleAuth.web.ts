@@ -1,11 +1,9 @@
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
   UserCredential,
 } from 'firebase/auth';
 import { auth } from './firebase';
-import { ALLOWED_DOMAIN } from '../constants/config';
 
 export async function signInWithGoogleWeb(): Promise<UserCredential> {
   const provider = new GoogleAuthProvider();
@@ -15,15 +13,7 @@ export async function signInWithGoogleWeb(): Promise<UserCredential> {
     prompt: 'select_account',
   });
 
-  try {
-    const credential = await signInWithPopup(auth, provider);
-    return credential;
-  } catch (error: any) {
-    // If popup was blocked by browser policy, fallback to redirect flow
-    if (error?.code === 'auth/popup-blocked') {
-      await signInWithRedirect(auth, provider);
-      throw error;
-    }
-    throw error;
-  }
+  // Note: Modern browsers (Chrome, Safari) block signInWithRedirect due to third-party
+  // storage partitioning (CHIPS). signInWithPopup is the official recommended flow.
+  return await signInWithPopup(auth, provider);
 }
