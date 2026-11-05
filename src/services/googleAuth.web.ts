@@ -10,9 +10,8 @@ import { ALLOWED_DOMAIN } from '../constants/config';
 export async function signInWithGoogleWeb(): Promise<UserCredential> {
   const provider = new GoogleAuthProvider();
 
-  // Set UX hints to steer the Google account chooser towards the organization domain
+  // Force Google to show the account chooser so the user can select their account
   provider.setCustomParameters({
-    hd: ALLOWED_DOMAIN,
     prompt: 'select_account',
   });
 
