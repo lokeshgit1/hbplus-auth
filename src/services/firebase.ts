@@ -22,18 +22,8 @@ if (!configCheck.isValid && typeof __DEV__ !== 'undefined' && __DEV__) {
   );
 }
 
-// Fallback placeholder config if env vars are empty, so initializeApp does not crash the entire JS bundle on startup
-const safeConfig = {
-  apiKey: firebaseConfig.apiKey || 'placeholder-api-key',
-  authDomain: firebaseConfig.authDomain || 'placeholder-domain.firebaseapp.com',
-  projectId: firebaseConfig.projectId || 'placeholder-project',
-  storageBucket: firebaseConfig.storageBucket || 'placeholder.appspot.com',
-  messagingSenderId: firebaseConfig.messagingSenderId || '1234567890',
-  appId: firebaseConfig.appId || '1:1234567890:web:abcdef',
-};
-
 if (!getApps().length) {
-  app = initializeApp(safeConfig);
+  app = initializeApp(firebaseConfig);
 } else {
   app = getApp();
 }
