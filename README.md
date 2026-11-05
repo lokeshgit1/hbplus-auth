@@ -1,5 +1,8 @@
 # HB Plus: Domain-Restricted Google Authentication Application
 
+> **Live Production URL:** [https://hbpluse.netlify.app/login](https://hbpluse.netlify.app/login)  
+> **GitHub Repository:** [https://github.com/lokeshgit1/hbplus-auth](https://github.com/lokeshgit1/hbplus-auth)
+
 A secure, enterprise-grade, cross-platform authentication application built with **React Native**, **React Native for Web**, and **Expo**. The application restricts system access exclusively to verified users belonging to the official organizational domain:
 
 ```
@@ -266,6 +269,7 @@ The project includes [public/_redirects](file:///C:/Users/chlok/Downloads/HB++/p
 - **Publish directory**: `dist`
 - **Build command**: `npx expo export --platform web`
 - Ensure all `EXPO_PUBLIC_*` environment variables are configured in Netlify's **Site configuration > Environment variables**.
+- **Live Deployed Application**: [https://hbpluse.netlify.app/login](https://hbpluse.netlify.app/login)
 
 ---
 
