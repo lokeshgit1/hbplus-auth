@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOrgUser() {
+      return isAuthenticated()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower().matches('^[^@]+@hbplus\\.fit$');
+    }
+
+    function isCallerAdmin() {
+      return isOrgUser()
+        && (
+          request.auth.token.email.lower() == 'admin@hbplus.fit' ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+        );
+    }
+
+    // User profile management (PRD 12.2, 13)
+    match /users/{uid} {
+      // Admins can read all profiles; standard users can only read their own profile
+      allow read: if isOrgUser() && (request.auth.uid == uid || isCallerAdmin());
+
+      // Users can create their own profile upon initial sign-in
+      // Standard users must be created with role 'user', unless caller is the designated initial admin
+      allow create: if isOrgUser() && request.auth.uid == uid
+                    && request.resource.data.email == request.auth.token.email.lower()
+                    && (
+                      request.resource.data.role == 'user' ||
+                      (request.resource.data.role == 'admin' && request.auth.token.email.lower() == 'admin@hbplus.fit')
+                    );
+
+      // Updates:
+      // 1. Regular users can update their own profile, but CANNOT alter 'role' (prevents self-privilege escalation)
+      // 2. Admins can update roles and metadata for any user
+      allow update: if isOrgUser() && (
+        (request.auth.uid == uid && !('role' in request.resource.data.diff(resource.data).affectedKeys()))
+        || isCallerAdmin()
+      );
+
+      // Deletions are forbidden
+      allow delete: if false;
+    }
+
+    // Protected application resources
+    match /dashboard/{doc} {
+      allow read: if isOrgUser();
+      allow write: if isCallerAdmin();
+    }
+
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
