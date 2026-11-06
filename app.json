@@ -7,11 +7,6 @@
     "icon": "./assets/icon.png",
     "scheme": "hbplus",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0F172A"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hbplus.auth"
