@@ -23,20 +23,14 @@ import {
   shadows,
 } from '../styles/theme';
 
-const GITHUB_REPO_URL = 'https://github.com/lokeshgit1/hbplus-auth';
-
 export const LoginScreen: React.FC = () => {
   const { width } = useWindowDimensions();
   const { signIn, isLoading, errorMessage, clearError, error } = useAuth();
 
   const isDesktop = width >= layout.breakpoints.tablet;
 
-  const handleOpenRepo = async () => {
-    try {
-      await Linking.openURL(GITHUB_REPO_URL);
-    } catch {
-      // Gracefully ignore if URL opening fails
-    }
+  const handleOpenRepo = () => {
+    Linking.openURL('https://github.com/lokeshgit1/hbplus-auth');
   };
 
   return (
@@ -48,21 +42,21 @@ export const LoginScreen: React.FC = () => {
         <View style={styles.ambientOrbBottom} />
       </View>
 
-      {/* Top-Right Corner GitHub Project Repository Link */}
-      <View style={styles.topRightContainer}>
+      {/* Top Right GitHub Repository Link */}
+      <View style={styles.topRightHeader}>
         <TouchableOpacity
           style={styles.repoButton}
           onPress={handleOpenRepo}
           activeOpacity={0.75}
           accessibilityRole="link"
-          accessibilityLabel="Project Repository on GitHub"
+          accessibilityLabel="Project repo on GitHub"
         >
           <Image
             source={require('../../assets/github-mark.png')}
             style={styles.repoIcon}
             resizeMode="contain"
           />
-          <Text style={styles.repoButtonText}>Project Repo</Text>
+          <Text style={styles.repoButtonText}>Project repo</Text>
         </TouchableOpacity>
       </View>
 
@@ -141,11 +135,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  // Top-Right GitHub Repo Link
-  topRightContainer: {
+  // Top Right GitHub Repository Link
+  topRightHeader: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? spacing.md : spacing.lg,
-    right: spacing.md,
+    top: Platform.OS === 'web' ? spacing.lg : spacing.md,
+    right: Platform.OS === 'web' ? spacing.lg : spacing.md,
     zIndex: 20,
   },
   repoButton: {
@@ -154,23 +148,23 @@ const styles = StyleSheet.create({
     backgroundColor: colors.glassSurface,
     borderColor: colors.glassBorderLight,
     borderWidth: 1,
+    borderRadius: borderRadius.full,
     paddingHorizontal: spacing.md,
     paddingVertical: 7,
-    borderRadius: borderRadius.full,
     ...shadows.button,
     ...Platform.select({
       web: {
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         cursor: 'pointer',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       } as any,
     }),
   },
   repoIcon: {
-    width: 16,
-    height: 16,
-    marginRight: 6,
+    width: 18,
+    height: 18,
+    marginRight: spacing.sm,
+    tintColor: '#FFFFFF',
   },
   repoButtonText: {
     color: colors.textPrimary,
@@ -223,6 +217,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: spacing.md,
+    paddingTop: Platform.OS === 'web' ? spacing.md : spacing.xl,
   },
   card: {
     backgroundColor: colors.glassCard,
