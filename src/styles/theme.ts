@@ -1,27 +1,50 @@
 export const colors = {
-  background: '#0F172A',       // Slate 900
-  surface: '#1E293B',          // Slate 800
-  surfaceElevated: '#334155',  // Slate 700
-  border: '#334155',           // Slate 700
-  borderLight: '#475569',      // Slate 600
+  background: '#090D16',       // Deep midnight canvas for glassmorphism
+  surface: '#151D30',          // Deep tinted glass surface
+  surfaceElevated: '#1E293B',  // Slate 800
+  border: 'rgba(255, 255, 255, 0.10)',
+  borderLight: 'rgba(255, 255, 255, 0.18)',
+
+  // Glass tokens
+  glassSurface: 'rgba(21, 29, 48, 0.65)',
+  glassCard: 'rgba(27, 38, 59, 0.55)',
+  glassCardHover: 'rgba(37, 51, 78, 0.70)',
+  glassElevated: 'rgba(30, 41, 59, 0.50)',
+  glassBorder: 'rgba(255, 255, 255, 0.12)',
+  glassBorderLight: 'rgba(255, 255, 255, 0.24)',
+  glassBorderSubtle: 'rgba(255, 255, 255, 0.06)',
+  glassBorderAccent: 'rgba(96, 165, 250, 0.40)',
+  glassBorderSuccess: 'rgba(52, 211, 153, 0.40)',
+  glassBorderDanger: 'rgba(248, 113, 113, 0.40)',
+  glassHighlight: 'rgba(255, 255, 255, 0.05)',
+  glassInput: 'rgba(11, 16, 27, 0.60)',
+
+  // Ambient Aura & Glow Orbs
+  ambientOrbBlue: 'rgba(59, 130, 246, 0.22)',
+  ambientOrbViolet: 'rgba(139, 92, 246, 0.20)',
+  ambientOrbCyan: 'rgba(6, 182, 212, 0.18)',
+  ambientOrbEmerald: 'rgba(16, 185, 129, 0.16)',
 
   // Brand & Action
   primary: '#3B82F6',          // Blue 500
   primaryHover: '#2563EB',     // Blue 600
+  primaryGlow: '#60A5FA',      // Blue 400
   primaryText: '#FFFFFF',
 
   // Semantic Status
   success: '#10B981',          // Emerald 500
+  successGlow: '#34D399',
   successBg: 'rgba(16, 185, 129, 0.12)',
-  successBorder: '#059669',
+  successBorder: 'rgba(52, 211, 153, 0.35)',
 
   danger: '#EF4444',           // Red 500
-  dangerBg: 'rgba(239, 68, 68, 0.12)',
-  dangerBorder: '#DC2626',
+  dangerGlow: '#F87171',
+  dangerBg: 'rgba(239, 68, 68, 0.14)',
+  dangerBorder: 'rgba(248, 113, 113, 0.35)',
 
   warning: '#F59E0B',          // Amber 500
-  warningBg: 'rgba(245, 158, 11, 0.12)',
-  warningBorder: '#D97706',
+  warningBg: 'rgba(245, 158, 11, 0.14)',
+  warningBorder: 'rgba(251, 191, 36, 0.35)',
 
   // Typography
   textPrimary: '#F8FAFC',      // Slate 50
@@ -32,7 +55,7 @@ export const colors = {
   // Google Brand
   googleWhite: '#FFFFFF',
   googleText: '#1F1F1F',
-  googleBorder: '#747775',
+  googleBorder: 'rgba(255, 255, 255, 0.25)',
 };
 
 export const spacing = {
@@ -90,16 +113,39 @@ export const layout = {
 export const shadows = {
   card: {
     shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.35,
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  cardGlow: {
+    shadowColor: '#3B82F6',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 6,
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
+    elevation: 10,
   },
   button: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowColor: '#3B82F6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
+  glass: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.45,
+    shadowRadius: 28,
+    elevation: 12,
+  },
+};
+
+export const glassStyles = {
+  backdropBlur: {
+    // For React Native Web, backdropFilter applies cleanly
+    // For iOS and Android, the semi-transparent dark slate surface provides the sleek glass look
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+  } as any,
 };

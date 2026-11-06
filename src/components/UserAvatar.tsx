@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
   image: {
     backgroundColor: colors.surfaceElevated,
     borderWidth: 2,
-    borderColor: colors.borderLight,
+    borderColor: colors.glassBorderLight,
   },
   fallbackContainer: {
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: colors.borderLight,
+    borderColor: colors.glassBorderLight,
   },
   initialsText: {
     color: colors.primaryText,

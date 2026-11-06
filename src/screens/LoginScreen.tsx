@@ -6,6 +6,7 @@ import {
   ScrollView,
   useWindowDimensions,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
@@ -27,6 +28,13 @@ export const LoginScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      {/* Ambient Atmospheric Luminous Orbs for Glass Refraction */}
+      <View style={StyleSheet.absoluteFill} pointerEvents="none">
+        <View style={styles.ambientOrbTop} />
+        <View style={styles.ambientOrbRight} />
+        <View style={styles.ambientOrbBottom} />
+      </View>
+
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
@@ -37,13 +45,19 @@ export const LoginScreen: React.FC = () => {
             isDesktop ? styles.cardDesktop : styles.cardMobile,
           ]}
         >
+          {/* Top Specular Sheen Highlight */}
+          <View style={styles.specularTopLine} />
+
           {/* Brand Logo & Header */}
           <View style={styles.headerContainer}>
-            <View style={styles.logoBadge}>
-              <Text style={styles.logoText}>HB+</Text>
+            <View style={styles.logoHalo}>
+              <View style={styles.logoBadge}>
+                <Text style={styles.logoText}>HB+</Text>
+              </View>
             </View>
             <Text style={styles.appTitle}>HB Plus</Text>
             <View style={styles.domainPill}>
+              <View style={styles.pulseDot} />
               <Text style={styles.domainPillText}>@hbplus.fit ONLY</Text>
             </View>
           </View>
@@ -77,8 +91,12 @@ export const LoginScreen: React.FC = () => {
 
           {/* Domain Restriction Notice */}
           <View style={styles.noticeContainer}>
+            <View style={styles.noticeIconWrapper}>
+              <Text style={styles.noticeIcon}>🔒</Text>
+            </View>
             <Text style={styles.noticeText}>
-              🔒 Access is strictly restricted to verified <Text style={styles.highlightText}>@hbplus.fit</Text> Google accounts. Personal accounts will be denied.
+              Access is strictly restricted to verified{' '}
+              <Text style={styles.highlightText}>@hbplus.fit</Text> accounts. Personal accounts will be denied.
             </Text>
           </View>
         </View>
@@ -92,6 +110,46 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  // Ambient Glowing Orbs behind the Glass Card
+  ambientOrbTop: {
+    position: 'absolute',
+    top: -60,
+    left: '15%',
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: colors.ambientOrbBlue,
+    ...Platform.select({
+      web: { filter: 'blur(75px)' } as any,
+      default: { opacity: 0.6 },
+    }),
+  },
+  ambientOrbRight: {
+    position: 'absolute',
+    top: '35%',
+    right: -40,
+    width: 280,
+    height: 280,
+    borderRadius: 140,
+    backgroundColor: colors.ambientOrbViolet,
+    ...Platform.select({
+      web: { filter: 'blur(80px)' } as any,
+      default: { opacity: 0.5 },
+    }),
+  },
+  ambientOrbBottom: {
+    position: 'absolute',
+    bottom: -50,
+    left: '25%',
+    width: 240,
+    height: 240,
+    borderRadius: 120,
+    backgroundColor: colors.ambientOrbCyan,
+    ...Platform.select({
+      web: { filter: 'blur(70px)' } as any,
+      default: { opacity: 0.4 },
+    }),
+  },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -99,14 +157,23 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   card: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderWidth: 1,
+    backgroundColor: colors.glassCard,
+    borderColor: colors.glassBorder,
+    borderWidth: 1.5,
     borderRadius: borderRadius.xl,
     padding: spacing.xl,
     alignItems: 'center',
     width: '100%',
-    ...shadows.card,
+    overflow: 'hidden',
+    position: 'relative',
+    ...shadows.glass,
+    ...Platform.select({
+      web: {
+        backdropFilter: 'blur(28px)',
+        WebkitBackdropFilter: 'blur(28px)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12)',
+      } as any,
+    }),
   },
   cardDesktop: {
     maxWidth: layout.maxContentWidth,
@@ -115,45 +182,75 @@ const styles = StyleSheet.create({
   cardMobile: {
     maxWidth: '100%',
   },
+  specularTopLine: {
+    position: 'absolute',
+    top: 0,
+    left: 20,
+    right: 20,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.22)',
+  },
   headerContainer: {
     alignItems: 'center',
     marginBottom: spacing.lg,
   },
+  logoHalo: {
+    padding: 3,
+    borderRadius: borderRadius.xl,
+    backgroundColor: 'rgba(59, 130, 246, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(96, 165, 250, 0.35)',
+    marginBottom: spacing.sm,
+    ...shadows.button,
+  },
   logoBadge: {
-    width: 64,
-    height: 64,
+    width: 60,
+    height: 60,
     borderRadius: borderRadius.lg,
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: spacing.sm,
     ...shadows.button,
   },
   logoText: {
     color: colors.primaryText,
     fontSize: typography.fontSize.xl,
     fontWeight: typography.fontWeight.bold,
+    letterSpacing: 0.5,
   },
   appTitle: {
     color: colors.textPrimary,
     fontSize: typography.fontSize.xxl,
     fontWeight: typography.fontWeight.bold,
     fontFamily: typography.fontFamily,
+    letterSpacing: -0.5,
   },
   domainPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    backgroundColor: colors.surfaceElevated,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: borderRadius.full,
     borderWidth: 1,
-    borderColor: colors.borderLight,
+    borderColor: colors.glassBorderLight,
+  },
+  pulseDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.success,
+    marginRight: 6,
+    ...Platform.select({
+      web: { boxShadow: '0 0 6px #10B981' } as any,
+    }),
   },
   domainPillText: {
-    color: colors.primary,
+    color: colors.primaryGlow,
     fontSize: typography.fontSize.xs,
-    fontWeight: typography.fontWeight.semibold,
-    letterSpacing: 0.5,
+    fontWeight: typography.fontWeight.bold,
+    letterSpacing: 0.8,
   },
   contentContainer: {
     alignItems: 'center',
@@ -165,6 +262,7 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.bold,
     marginBottom: spacing.xs,
     textAlign: 'center',
+    letterSpacing: -0.3,
   },
   subheading: {
     color: colors.textSecondary,
@@ -175,25 +273,35 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     width: '100%',
-    marginTop: spacing.md,
+    marginTop: spacing.sm,
     marginBottom: spacing.lg,
   },
   noticeContainer: {
-    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-    borderColor: colors.border,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.glassInput,
+    borderColor: colors.glassBorderSubtle,
     borderWidth: 1,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primaryGlow,
     borderRadius: borderRadius.md,
-    padding: spacing.sm,
+    padding: spacing.md,
     width: '100%',
   },
+  noticeIconWrapper: {
+    marginRight: spacing.sm,
+  },
+  noticeIcon: {
+    fontSize: 14,
+  },
   noticeText: {
+    flex: 1,
     color: colors.textMuted,
     fontSize: typography.fontSize.xs,
     lineHeight: typography.fontSize.xs * typography.lineHeight.normal,
-    textAlign: 'center',
   },
   highlightText: {
-    color: colors.primary,
+    color: colors.primaryGlow,
     fontWeight: typography.fontWeight.semibold,
   },
 });
