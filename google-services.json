@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "436500150629-uu272ft8tcimm7p8dk8iqk8ppqvk08av.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hbplus.auth",
+            "certificate_hash": "d25edc5f5aef89664f08467d06af2278b719108d"
+          }
+        },
+        {
           "client_id": "436500150629-6e6oq6b5t8ugir94odbugk9t32iofb77.apps.googleusercontent.com",
           "client_type": 3
         }
