@@ -2,6 +2,7 @@
 
 > **Live Production URL:** [https://hbpluse.netlify.app/login](https://hbpluse.netlify.app/login)  
 > **GitHub Repository:** [https://github.com/lokeshgit1/hbplus-auth](https://github.com/lokeshgit1/hbplus-auth)
+> **Live apk** [https://expo.dev/accounts/lokesh.r/projects/hbplus-auth/builds/732d7746-6f9e-4c93-b6d3-9f7e2fa0a181](https://expo.dev/accounts/lokesh.r/projects/hbplus-auth/builds/732d7746-6f9e-4c93-b6d3-9f7e2fa0a181}
 
 A secure, enterprise-grade, cross-platform authentication application built with **React Native**, **React Native for Web**, and **Expo**. The application restricts system access exclusively to verified users belonging to the official organizational domain:
 
