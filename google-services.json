@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "436500150629",
+    "project_id": "hopeb-c52ff",
+    "storage_bucket": "hopeb-c52ff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436500150629:android:26a6882345d83949a8c98c",
+        "android_client_info": {
+          "package_name": "com.hbplus.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436500150629-6e6oq6b5t8ugir94odbugk9t32iofb77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATuw_QzptSGEfNoI8BjN5baBTfKN-SN0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436500150629-6e6oq6b5t8ugir94odbugk9t32iofb77.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

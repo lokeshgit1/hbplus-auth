@@ -43,5 +43,4 @@ yarn-error.*
 /android
 
 # Google services native credential files
-google-services.json
 GoogleService-Info.plist
