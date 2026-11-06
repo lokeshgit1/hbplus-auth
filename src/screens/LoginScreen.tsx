@@ -7,6 +7,9 @@ import {
   useWindowDimensions,
   SafeAreaView,
   Platform,
+  TouchableOpacity,
+  Image,
+  Linking,
 } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
@@ -20,11 +23,21 @@ import {
   shadows,
 } from '../styles/theme';
 
+const GITHUB_REPO_URL = 'https://github.com/lokeshgit1/hbplus-auth';
+
 export const LoginScreen: React.FC = () => {
   const { width } = useWindowDimensions();
   const { signIn, isLoading, errorMessage, clearError, error } = useAuth();
 
   const isDesktop = width >= layout.breakpoints.tablet;
+
+  const handleOpenRepo = async () => {
+    try {
+      await Linking.openURL(GITHUB_REPO_URL);
+    } catch {
+      // Gracefully ignore if URL opening fails
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -33,6 +46,24 @@ export const LoginScreen: React.FC = () => {
         <View style={styles.ambientOrbTop} />
         <View style={styles.ambientOrbRight} />
         <View style={styles.ambientOrbBottom} />
+      </View>
+
+      {/* Top-Right Corner GitHub Project Repository Link */}
+      <View style={styles.topRightContainer}>
+        <TouchableOpacity
+          style={styles.repoButton}
+          onPress={handleOpenRepo}
+          activeOpacity={0.75}
+          accessibilityRole="link"
+          accessibilityLabel="Project Repository on GitHub"
+        >
+          <Image
+            source={require('../../assets/github-mark.png')}
+            style={styles.repoIcon}
+            resizeMode="contain"
+          />
+          <Text style={styles.repoButtonText}>Project Repo</Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView
@@ -109,6 +140,43 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  // Top-Right GitHub Repo Link
+  topRightContainer: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? spacing.md : spacing.lg,
+    right: spacing.md,
+    zIndex: 20,
+  },
+  repoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.glassSurface,
+    borderColor: colors.glassBorderLight,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 7,
+    borderRadius: borderRadius.full,
+    ...shadows.button,
+    ...Platform.select({
+      web: {
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        cursor: 'pointer',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+      } as any,
+    }),
+  },
+  repoIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 6,
+  },
+  repoButtonText: {
+    color: colors.textPrimary,
+    fontSize: typography.fontSize.xs,
+    fontWeight: typography.fontWeight.semibold,
+    letterSpacing: 0.3,
   },
   // Ambient Glowing Orbs behind the Glass Card
   ambientOrbTop: {
